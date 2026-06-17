@@ -16,7 +16,11 @@ const pool = new Pool({
 app.get('/api/items', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM  employees;');
-    res.json(rows);
+     res.json({
+      version: "v2",
+      pod: process.env.HOSTNAME,
+      data: rows
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Database error");
